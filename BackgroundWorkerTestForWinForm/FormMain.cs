@@ -7,12 +7,12 @@ using WinControlExtensionLib;
 
 namespace BackgroundWorkerTestForWinForm
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
 
         private readonly BackgroundWorker bw;
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             bw = BackgroundWorkerExtension.InitNewBackgroundWorker(bw_DoWork, bw_ProgressChanged, bw_RunWorkerCompleted);
