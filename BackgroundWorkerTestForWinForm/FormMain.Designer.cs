@@ -51,6 +51,7 @@
             this.txtExecCount.Name = "txtExecCount";
             this.txtExecCount.Size = new System.Drawing.Size(184, 21);
             this.txtExecCount.TabIndex = 1;
+            this.txtExecCount.Text = "10";
             // 
             // btnExec
             // 
@@ -90,7 +91,7 @@
             this.lblMessage.Size = new System.Drawing.Size(0, 12);
             this.lblMessage.TabIndex = 5;
             // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,7 +102,7 @@
             this.Controls.Add(this.btnExec);
             this.Controls.Add(this.txtExecCount);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

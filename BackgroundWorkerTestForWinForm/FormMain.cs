@@ -23,7 +23,11 @@ namespace BackgroundWorkerTestForWinForm
             var ce = e.Argument as CustomerDoWorkEventArgs;
             BackgroundWorker cBw = ce.ExecBackgroundWorker;
             btnCancel.SetControlEnable(this, true);
-            int count = Convert.ToInt32(ce.ExecParameter.ToString(), 10);
+            int count;
+            if (!int.TryParse(ce.ExecParameter.ToString(),out count))
+            {
+                count = 10;
+            }
             for (int i = 0; i < count; i++)
             {
                 if (!cBw.CancellationPending)
