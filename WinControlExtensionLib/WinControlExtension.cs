@@ -18,7 +18,6 @@ namespace WinControlExtensionLib
             {
                 control.Text = text;
             }
-
             Application.DoEvents();
         }
 
@@ -33,7 +32,6 @@ namespace WinControlExtensionLib
             {
                 control.Enabled = enable;
             }
-
             Application.DoEvents();
         }
 

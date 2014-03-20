@@ -6,18 +6,11 @@ namespace BackgroundWorkerTestForConsole
 {
     class Program
     {
-        private static readonly BackgroundWorker bw = BackgroundWorkerExtension.InitNewBackgroundWorker(null,null,null);
-
-        static void Main(string[] args)
+        static void Main()
         {
-            bw.RunWorkerAsyncExt(null); 
-
+            BackgroundWorker bw = BackgroundWorkerExtension.InitNewBackgroundWorker();
+            bw.RunWorkerAsyncExt(); 
             Console.ReadLine();
-
-            bw.CancelAsyncExt();
-
-            Console.ReadLine();
-            Console.WriteLine();
         }
     }
 }

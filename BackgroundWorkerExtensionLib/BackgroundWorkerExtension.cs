@@ -14,7 +14,15 @@ namespace BackgroundWorkerExtensionLib
     public static class BackgroundWorkerExtension
     {
 
-        public static BackgroundWorker InitNewBackgroundWorker(DoWorkEventHandler doWorkEvent, ProgressChangedEventHandler progressChangedEvent, RunWorkerCompletedEventHandler runWorkerCompletedEvent)
+        //构造BackgroundWorker对象
+        /// <summary>
+        /// 构造BackgroundWorker对象
+        /// </summary>
+        /// <param name="doWorkEvent">待处理的事件</param>
+        /// <param name="progressChangedEvent">通知事件</param>
+        /// <param name="runWorkerCompletedEvent">结束事件</param>
+        /// <returns></returns>
+        public static BackgroundWorker InitNewBackgroundWorker(DoWorkEventHandler doWorkEvent = null, ProgressChangedEventHandler progressChangedEvent = null, RunWorkerCompletedEventHandler runWorkerCompletedEvent = null)
         {
             var bw = new BackgroundWorker();
             bw.RegisterDoWork(doWorkEvent);
@@ -23,7 +31,43 @@ namespace BackgroundWorkerExtensionLib
             return bw;
         }
 
-        private static void RegisterDoWork(this BackgroundWorker bw, DoWorkEventHandler doWorkEvent = null)
+        //取消BackgroundWorker的执行
+        /// <summary>
+        /// 取消BackgroundWorker的执行
+        /// </summary>
+        /// <param name="bw"></param>
+        public static void CancelAsyncExt(this BackgroundWorker bw)
+        {
+            bw.CancelAsync();
+        }
+
+        //执行BackgroundWorker
+        /// <summary>
+        /// 执行BackgroundWorker
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="param"></param>
+        public static void RunWorkerAsyncExt(this BackgroundWorker bw, object param = null)
+        {
+            //只有在BackgroundWorker空闲的时候才执行
+            if (!bw.IsBusy)
+            {
+                bw.RunWorkerAsync(new CustomerDoWorkEventArgs
+                {
+                    ExecParameter = param ?? 10,
+                    ExecBackgroundWorker = bw
+                });
+            }
+
+        }
+
+        //注册DoWork事件
+        /// <summary>
+        /// 注册DoWork事件
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="doWorkEvent"></param>
+        public static void RegisterDoWork(this BackgroundWorker bw, DoWorkEventHandler doWorkEvent = null)
         {
             bw.WorkerSupportsCancellation = true;
 
@@ -57,7 +101,13 @@ namespace BackgroundWorkerExtensionLib
             bw.DoWork += doWorkEvent;
         }
 
-        private static void RegisterProgressChanged(this BackgroundWorker bw, ProgressChangedEventHandler progressChangedEvent = null)
+        //注册ProgressChanged事件
+        /// <summary>
+        /// 注册ProgressChanged事件
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="progressChangedEvent"></param>
+        public static void RegisterProgressChanged(this BackgroundWorker bw, ProgressChangedEventHandler progressChangedEvent = null)
         {
             bw.WorkerReportsProgress = true;
 
@@ -76,7 +126,13 @@ namespace BackgroundWorkerExtensionLib
             bw.ProgressChanged += progressChangedEvent;
         }
 
-        private static void RegisterRunWorkerCompleted(this BackgroundWorker bw, RunWorkerCompletedEventHandler runWorkerCompletedEvent = null)
+        //注册RunWorkerCompleted事件
+        /// <summary>
+        /// 注册RunWorkerCompleted事件
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="runWorkerCompletedEvent"></param>
+        public static void RegisterRunWorkerCompleted(this BackgroundWorker bw, RunWorkerCompletedEventHandler runWorkerCompletedEvent = null)
         {
 
             if (runWorkerCompletedEvent == null)
@@ -101,25 +157,6 @@ namespace BackgroundWorkerExtensionLib
             }
 
             bw.RunWorkerCompleted += runWorkerCompletedEvent;
-        }
-
-        public static void CancelAsyncExt(this BackgroundWorker bw)
-        {
-            bw.CancelAsync();
-        }
-
-        public static void RunWorkerAsyncExt(this BackgroundWorker bw, object param)
-        {
-            //只有在BackgroundWorker空闲的时候才执行
-            if (!bw.IsBusy)
-            {
-                bw.RunWorkerAsync(new CustomerDoWorkEventArgs
-                {
-                    ExecParameter = param ?? 10,
-                    ExecBackgroundWorker = bw
-                });
-            }
- 
         }
 
     }
